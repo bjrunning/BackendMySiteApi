@@ -2,6 +2,7 @@ package org.example.controller;
 
 import org.example.model.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,8 +16,12 @@ public class PageController {
 
     @GetMapping("/pages")
     @ResponseStatus(HttpStatus.OK)
-    public List<Page> index(@RequestParam(defaultValue = "10") Integer limit) {
-        return pages.stream().limit(limit).toList();
+    public ResponseEntity<List<Page>> index(@RequestParam(defaultValue = "10") Integer limit) {
+        var result = pages.stream().limit(limit).toList();
+
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(pages.size()))
+                .body(result);
     }
 
     @PostMapping("/pages")
@@ -28,11 +33,11 @@ public class PageController {
 
     @GetMapping("/pages/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Page> show(@PathVariable String id) {
+    public ResponseEntity<Page> show(@PathVariable String id) {
         var page = pages.stream()
                 .filter(p -> p.getSlug().equals(id))
                 .findFirst();
-        return page;
+        return ResponseEntity.of(page);
     }
 
     @PutMapping("/pages/{id}")
