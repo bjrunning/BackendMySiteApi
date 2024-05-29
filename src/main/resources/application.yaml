@@ -1,12 +1,14 @@
+---
+logging:
+  level:
+    root: WARN
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/backend_mysite_db
     username: postgres
     password: "c0mrade"
     driver-class-name: org.postgresql.Driver
-  thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
   jpa:
     generate-ddl: true
     show-sql: true
@@ -14,3 +16,10 @@ spring:
   output:
     ansi:
       enabled: always
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+
+server:
+  address: 0.0.0.0
