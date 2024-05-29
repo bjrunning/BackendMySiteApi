@@ -19,7 +19,7 @@ java {
 }
 
 application {
-    mainClass.set("org.example.BackendMySiteApplication")
+    mainClass.set("org.example.BackendMySiteApiApplication")
 }
 
 repositories {
