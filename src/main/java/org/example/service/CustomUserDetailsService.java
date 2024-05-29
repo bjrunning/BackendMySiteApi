@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден."));
         return user;
     }
 
@@ -37,24 +37,24 @@ public class CustomUserDetailsService implements UserDetailsManager {
     @Override
     public void updateUser(UserDetails user) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+        throw new UnsupportedOperationException("Нереализованный метод 'updateUser'");
     }
 
     @Override
     public void deleteUser(String username) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+        throw new UnsupportedOperationException("Нереализованный метод 'deleteUser'");
     }
 
     @Override
     public void changePassword(String oldPassword, String newPassword) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changePassword'");
+        throw new UnsupportedOperationException("Нереализованный метод 'changePassword'");
     }
 
     @Override
     public boolean userExists(String username) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'userExists'");
+        throw new UnsupportedOperationException("Нереализованный метод 'userExists'");
     }
 }
