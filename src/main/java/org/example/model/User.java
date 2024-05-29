@@ -44,7 +44,7 @@ public class User implements UserDetails, BaseEntity {
     private List<Post> posts = new ArrayList<>();
 
     @Column(unique = true)
-    @Email
+    @Email(message = "Некорректный email")
     @ToString.Include
     private String email;
 

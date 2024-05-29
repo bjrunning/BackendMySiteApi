@@ -9,15 +9,15 @@ import org.openapitools.jackson.nullable.JsonNullable;
 @Getter
 public class PostUpdateDTO {
 
-    @NotNull
+    @NotNull(message = "Автор не может быть пустым")
     private JsonNullable<Long> authorId;
 
-    @NotNull
+    @NotNull(message = "Слаг не может быть пустым")
     private JsonNullable<String> slug;
 
-    @NotNull
+    @NotNull(message = "Название поста не может быть пустым")
     private JsonNullable<String> name;
 
-    @NotNull
+    @NotNull(message = "Описание поста не может быть пустым")
     private JsonNullable<String> body;
 }

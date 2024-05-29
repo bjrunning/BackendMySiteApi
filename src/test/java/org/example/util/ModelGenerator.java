@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import net.datafaker.Faker;
 import org.example.model.Post;
-import org.example.model.PostComment;
 import org.example.model.User;
 import org.instancio.Instancio;
 import org.instancio.Model;
@@ -18,7 +17,6 @@ public class ModelGenerator {
 
     private Model<Post> postModel;
     private Model<User> userModel;
-    private Model<PostComment> postCommentModel;
 
     @Autowired
     private Faker faker;
@@ -28,11 +26,6 @@ public class ModelGenerator {
         postModel = Instancio.of(Post.class)
                 .ignore(Select.field(Post::getId))
                 .supply(Select.field(Post::getName), () -> faker.gameOfThrones().house())
-                .supply(Select.field(Post::getBody), () -> faker.gameOfThrones().quote())
-                .toModel();
-
-        postCommentModel = Instancio.of(PostComment.class)
-                .ignore(Select.field(PostComment::getId))
                 .supply(Select.field(Post::getBody), () -> faker.gameOfThrones().quote())
                 .toModel();
 

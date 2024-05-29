@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 public class UserUpdateDTO {
 
-    @NotNull
+    @NotNull(message = "Имя не может быть пустым")
     private String firstName;
 
-    @NotNull
+    @NotNull(message = "Фамилия не может быть пустой")
     private String lastName;
 }

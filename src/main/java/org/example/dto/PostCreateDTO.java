@@ -8,15 +8,15 @@ import lombok.Setter;
 @Getter
 public class PostCreateDTO {
 
-    @NotNull
+    @NotNull(message = "Автор не должен быть пустым")
     private Long authorId;
 
-    @NotNull
+    @NotNull(message = "Слаг не должен быть пустым")
     private String slug;
 
-    @NotNull
+    @NotNull(message = "Название не должно быть пустым")
     private String name;
 
-    @NotNull
+    @NotNull(message = "Описание поста не должно быть пустым")
     private String body;
 }

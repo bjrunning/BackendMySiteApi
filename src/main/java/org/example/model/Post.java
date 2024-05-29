@@ -30,6 +30,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "posts")
 public class Post implements BaseEntity {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @ToString.Include
@@ -42,14 +43,14 @@ public class Post implements BaseEntity {
 
     @Column(unique = true)
     @ToString.Include
-    @NotNull
+    @NotNull(message = "Слаг не может быть пустым")
     private String slug;
 
-    @NotBlank
+    @NotBlank(message = "Название не должно быть пустым")
     @ToString.Include
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Описание поста не должно быть пустым")
     @ToString.Include
     @Column(columnDefinition = "TEXT")
     private String body;

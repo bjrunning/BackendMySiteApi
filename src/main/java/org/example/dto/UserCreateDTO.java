@@ -10,15 +10,15 @@ import lombok.Setter;
 @Getter
 public class UserCreateDTO {
 
-    @NotBlank
+    @NotBlank(message = "Имя не должно быть пустым")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Фамилия не должна быть пустой")
     private String lastName;
 
-    @Email
+    @Email(message = "Некорректный email")
     private String email;
 
-    @Size(min = 6, max = 20)
+    @Size(min = 6, max = 20, message = "Пароль должен быть от 6 до 20 символов")
     private String password;
 }
