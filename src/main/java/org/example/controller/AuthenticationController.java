@@ -1,5 +1,8 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.example.dto.AuthRequest;
 import org.example.util.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +23,11 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Operation(summary = "Аутентификация пользователя.")
+    @ApiResponse(responseCode = "200", description = "Вы успешно прошли аутентификацию.")
     @PostMapping("/login")
-    public String create(@RequestBody AuthRequest authRequest) {
+    public String create(@Parameter(description = "Ваш логин и пароль.")
+                             @RequestBody AuthRequest authRequest) {
         var authentication = new UsernamePasswordAuthenticationToken(
                 authRequest.getUsername(), authRequest.getPassword());
 

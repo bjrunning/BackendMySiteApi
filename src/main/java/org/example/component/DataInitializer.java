@@ -29,7 +29,7 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        var email = "bjrunning@example.com";
+        var email = "admin@example.com";
         var userData = new User();
         userData.setEmail(email);
         userData.setPasswordDigest("qwerty");

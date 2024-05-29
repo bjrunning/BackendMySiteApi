@@ -1,9 +1,14 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +32,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "users")
 public class User implements UserDetails, BaseEntity {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @ToString.Include

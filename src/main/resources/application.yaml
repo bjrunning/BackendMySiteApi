@@ -4,22 +4,24 @@ logging:
     root: WARN
 
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/backend_mysite_db
-    username: postgres
-    password: "c0mrade"
-    driver-class-name: org.postgresql.Driver
   jpa:
-    generate-ddl: true
     show-sql: true
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
   output:
     ansi:
       enabled: always
+  profiles:
+    default: development
 
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
 
 server:
   address: 0.0.0.0
