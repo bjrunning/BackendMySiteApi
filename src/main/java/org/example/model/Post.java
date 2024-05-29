@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.EntityListeners;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,11 +46,11 @@ public class Post implements BaseEntity {
     @NotNull(message = "Слаг не может быть пустым")
     private String slug;
 
-    @NotNull(message = "Название не должно быть пустым")
+    @NotBlank(message = "Название не должно быть пустым")
     @ToString.Include
     private String name;
 
-    @NotNull(message = "Описание поста не должно быть пустым")
+    @NotBlank(message = "Описание поста не должно быть пустым")
     @ToString.Include
     @Column(columnDefinition = "TEXT")
     private String body;

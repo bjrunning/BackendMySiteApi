@@ -9,7 +9,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +45,6 @@ public class User implements UserDetails, BaseEntity {
 
     @Column(unique = true)
     @Email(message = "Некорректный email")
-    @NotNull(message = "Email не может быть пустым")
     @ToString.Include
     private String email;
 
