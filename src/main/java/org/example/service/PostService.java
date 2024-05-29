@@ -32,7 +32,7 @@ public class PostService {
         return result;
     }
 
-    PostDTO create(PostCreateDTO postData) {
+    public PostDTO create(PostCreateDTO postData) {
         var post = postMapper.map(postData);
         post.setAuthor(userUtils.getCurrentUser());
         repository.save(post);
@@ -40,23 +40,23 @@ public class PostService {
         return postDTO;
     }
 
-    PostDTO findById(Long id) {
+    public PostDTO findById(Long id) {
         var post = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найдено: " + id));
         var postDTO = postMapper.map(post);
         return postDTO;
     }
 
-    PostDTO update(PostUpdateDTO postData, Long id) {
+    public PostDTO update(PostUpdateDTO postData, Long id) {
         var post = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найдено: " + id));
         postMapper.update(postData, post);
         repository.save(post);
         var postDTO = postMapper.map(post);
         return postDTO;
     }
 
-    void delete(Long id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 }

@@ -17,8 +17,10 @@ public class UserCreateDTO {
     private String lastName;
 
     @Email(message = "Некорректный email")
+    @NotBlank(message = "Email не должен быть пустым")
     private String email;
 
+    @NotBlank(message = "Пароль не должен быть пустым")
     @Size(min = 6, max = 20, message = "Пароль должен быть от 6 до 20 символов")
     private String password;
 }

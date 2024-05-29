@@ -90,7 +90,7 @@ public class PostsController {
     }
 
     @SecurityRequirement(name = "JWT")
-    @Operation(summary = "Обновить поста по его идентификатору.")
+    @Operation(summary = "Обновление поста по его идентификатору.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Пост обновлен."),
             @ApiResponse(responseCode = "404", description = "Пост с таким идентификатором не найден.")
@@ -98,12 +98,12 @@ public class PostsController {
     @PutMapping("/posts/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@userUtils.isAuthor(#id)")
-    PostDTO update(@Parameter(description = "Данные поста для обновления.")
+    PostDTO update(@Parameter(description = "Данные поста, которые нужно обновить.")
                    @RequestBody @Valid PostUpdateDTO postData,
-                   @Parameter(description = "Идентификатор поста, которого необходимо обновить.")
+                   @Parameter(description = "Идентификатор поста, которого нужно обновить.")
                    @PathVariable Long id) {
         var post = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Не найдено: " + id));
         postMapper.update(postData, post);
         repository.save(post);
         var postDTO = postMapper.map(post);

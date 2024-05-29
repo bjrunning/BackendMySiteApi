@@ -33,24 +33,23 @@ public class SecurityConfig {
     private CustomUserDetailsService userService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)
-            throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-                        .requestMatchers("/v3/api-docs/**").permitAll()
-                        .requestMatchers("/api/login").permitAll()
-                        .requestMatchers("/api/pages/*").permitAll()
-                        .requestMatchers("/api/pages").permitAll()
-                        .requestMatchers("/api/users").permitAll()
-                        .requestMatchers("/api/users/*").permitAll()
-                        .requestMatchers("/swagger-ui/**").permitAll()
-                        .requestMatchers("/swagger.html").permitAll()
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/index.html").permitAll()
-                        .requestMatchers("/assets/**").permitAll()
-                        .anyRequest().authenticated())
+                                .requestMatchers("/v3/api-docs/**").permitAll()
+                                .requestMatchers("/api/login").permitAll()
+                                .requestMatchers("/api/pages/*").permitAll()
+                                .requestMatchers("/api/pages").permitAll()
+                                .requestMatchers("/api/users").permitAll()
+                                .requestMatchers("/api/users/*").permitAll()
+                                .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/swagger.html").permitAll()
+                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/index.html").permitAll()
+                                .requestMatchers("/assets/**").permitAll()
+                                .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer((rs) -> rs.jwt((jwt) -> jwt.decoder(jwtDecoder)))
                 .httpBasic(Customizer.withDefaults())

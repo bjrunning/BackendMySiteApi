@@ -1,6 +1,6 @@
 package org.example.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,15 +8,15 @@ import lombok.Setter;
 @Getter
 public class PostCreateDTO {
 
-    @NotNull(message = "Автор не должен быть пустым")
+    @NotBlank(message = "Автор не должен быть пустым")
     private Long authorId;
 
-    @NotNull(message = "Слаг не должен быть пустым")
+    @NotBlank(message = "Слаг не должен быть пустым")
     private String slug;
 
-    @NotNull(message = "Название не должно быть пустым")
+    @NotBlank(message = "Название не должно быть пустым")
     private String name;
 
-    @NotNull(message = "Описание поста не должно быть пустым")
+    @NotBlank(message = "Описание поста не должно быть пустым")
     private String body;
 }
