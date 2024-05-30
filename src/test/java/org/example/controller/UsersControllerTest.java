@@ -92,7 +92,8 @@ public class UsersControllerTest {
                 .andExpect(status().isCreated());
 
         var user = userRepository.findByEmail(data.getEmail()).get();
-        
+
+        assertNotNull(user);
         assertThat(user.getFirstName()).isEqualTo(data.getFirstName());
         assertThat(user.getLastName()).isEqualTo(data.getLastName());
     }
