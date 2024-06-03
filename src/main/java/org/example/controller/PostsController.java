@@ -9,11 +9,7 @@ import jakarta.validation.Valid;
 import org.example.dto.PostCreateDTO;
 import org.example.dto.PostDTO;
 import org.example.dto.PostUpdateDTO;
-import org.example.exception.ResourceNotFoundException;
-import org.example.mapper.PostMapper;
-import org.example.repository.PostRepository;
 import org.example.service.PostService;
-import org.example.util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +29,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class PostsController {
-
-    @Autowired
-    private PostRepository repository;
-
-    @Autowired
-    private PostMapper postMapper;
-
-    @Autowired
-    private UserUtils userUtils;
 
     @Autowired
     private PostService postService;
@@ -66,11 +53,8 @@ public class PostsController {
     @ResponseStatus(HttpStatus.CREATED)
     PostDTO create(@Parameter(description = "Данные поста, которые нужно сохранить.")
                    @Valid @RequestBody PostCreateDTO postData) {
-        var post = postMapper.map(postData);
-        post.setAuthor(userUtils.getCurrentUser());
-        repository.save(post);
-        var postDTO = postMapper.map(post);
-        return postDTO;
+        var postCreate = postService.create(postData);
+        return postCreate;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -83,10 +67,8 @@ public class PostsController {
     @ResponseStatus(HttpStatus.OK)
     PostDTO show(@Parameter(description = "Идентификатор поста, которого нужно найти.")
                  @PathVariable Long id) {
-        var post = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Not Found: " + id));
-        var postDTO = postMapper.map(post);
-        return postDTO;
+        var postId = postService.findById(id);
+        return postId;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -102,12 +84,8 @@ public class PostsController {
                    @RequestBody @Valid PostUpdateDTO postData,
                    @Parameter(description = "Идентификатор поста, которого нужно обновить.")
                    @PathVariable Long id) {
-        var post = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Не найдено: " + id));
-        postMapper.update(postData, post);
-        repository.save(post);
-        var postDTO = postMapper.map(post);
-        return postDTO;
+        var postUpdate = postService.update(postData, id);
+        return postUpdate;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -121,6 +99,6 @@ public class PostsController {
     @PreAuthorize("@userUtils.isAuthor(#id)")
     void destroy(@Parameter(description = "Идентификатор поста, которого нужно удалить")
                  @PathVariable Long id) {
-        repository.deleteById(id);
+        postService.delete(id);
     }
 }
