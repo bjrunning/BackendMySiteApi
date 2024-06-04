@@ -9,9 +9,7 @@ import jakarta.validation.Valid;
 import org.example.dto.UserCreateDTO;
 import org.example.dto.UserDTO;
 import org.example.dto.UserUpdateDTO;
-import org.example.exception.ResourceNotFoundException;
-import org.example.mapper.UserMapper;
-import org.example.repository.UserRepository;
+import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,23 +30,17 @@ import java.util.List;
 public class UsersController {
 
     @Autowired
-    private UserRepository repository;
-
-    @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @SecurityRequirement(name = "JWT")
     @Operation(summary = "Получение списка всех пользователей.")
     @ApiResponse(responseCode = "200", description = "Список всех пользователей.")
     @GetMapping("/users")
-    ResponseEntity<List<UserDTO>> index() {
-        var users = repository.findAll();
-        var result = users.stream()
-                .map(userMapper::map)
-                .toList();
+    public ResponseEntity<List<UserDTO>> index() {
+        var users = userService.getAll();
         return ResponseEntity.ok()
                 .header("X-Total-Count", String.valueOf(users.size()))
-                .body(result);
+                .body(users);
     }
 
     @SecurityRequirement(name = "JWT")
@@ -56,11 +48,10 @@ public class UsersController {
     @ApiResponse(responseCode = "201", description = "Создание пользователя.")
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    UserDTO create(@Parameter(description = "Пользовательские данные для сохранения.")
+    public UserDTO create(@Parameter(description = "Пользовательские данные для сохранения.")
                    @Valid @RequestBody UserCreateDTO userData) {
-        var user = userMapper.map(userData);
-        repository.save(user);
-        return userMapper.map(user);
+        var userCreate = userService.create(userData);
+        return userCreate;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -71,16 +62,12 @@ public class UsersController {
     })
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    UserDTO update(@Parameter(description = "Данные пользователя для обновления.")
+    public UserDTO update(@Parameter(description = "Данные пользователя для обновления.")
                    @Valid @RequestBody UserUpdateDTO userData,
                    @Parameter(description = "Идентификатор пользователя, которого необходимо обновить.")
                    @PathVariable Long id) {
-        var user = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Не найдено."));
-        userMapper.update(userData, user);
-        repository.save(user);
-        var userDTO = userMapper.map(user);
-        return userDTO;
+        var userUpdate = userService.update(userData, id);
+        return userUpdate;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -91,11 +78,10 @@ public class UsersController {
     })
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    UserDTO show(@Parameter(description = "Идентификатор пользователя, которого нужно найти.")
+    public UserDTO show(@Parameter(description = "Идентификатор пользователя, которого нужно найти.")
                   @PathVariable Long id) {
-        var user = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Не найдено."));
-        return userMapper.map(user);
+        var userShow = userService.show(id);
+        return userShow;
     }
 
     @SecurityRequirement(name = "JWT")
@@ -106,7 +92,6 @@ public class UsersController {
     public void delete(
             @Parameter(description = "Идентификатор пользователя, которого необходимо удалить.")
             @PathVariable Long id) {
-
-        repository.deleteById(id);
+        userService.delete(id);
     }
 }

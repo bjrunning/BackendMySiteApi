@@ -38,7 +38,7 @@ public class PostsController {
     @ApiResponse(responseCode = "200", description = "Список всех постов.")
     @GetMapping("/posts")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<List<PostDTO>> index() {
+    public ResponseEntity<List<PostDTO>> index() {
         var posts = postService.getAll();
 
         return ResponseEntity.ok()
@@ -51,7 +51,7 @@ public class PostsController {
     @ApiResponse(responseCode = "201", description = "Пост создан.")
     @PostMapping("/posts")
     @ResponseStatus(HttpStatus.CREATED)
-    PostDTO create(@Parameter(description = "Данные поста, которые нужно сохранить.")
+    public PostDTO create(@Parameter(description = "Данные поста, которые нужно сохранить.")
                    @Valid @RequestBody PostCreateDTO postData) {
         var postCreate = postService.create(postData);
         return postCreate;
@@ -65,7 +65,7 @@ public class PostsController {
     })
     @GetMapping("/posts/{id}")
     @ResponseStatus(HttpStatus.OK)
-    PostDTO show(@Parameter(description = "Идентификатор поста, которого нужно найти.")
+    public PostDTO show(@Parameter(description = "Идентификатор поста, которого нужно найти.")
                  @PathVariable Long id) {
         var postId = postService.findById(id);
         return postId;
@@ -80,7 +80,7 @@ public class PostsController {
     @PutMapping("/posts/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@userUtils.isAuthor(#id)")
-    PostDTO update(@Parameter(description = "Данные поста, которые нужно обновить.")
+    public PostDTO update(@Parameter(description = "Данные поста, которые нужно обновить.")
                    @RequestBody @Valid PostUpdateDTO postData,
                    @Parameter(description = "Идентификатор поста, которого нужно обновить.")
                    @PathVariable Long id) {
@@ -97,7 +97,7 @@ public class PostsController {
     @DeleteMapping("/posts/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("@userUtils.isAuthor(#id)")
-    void destroy(@Parameter(description = "Идентификатор поста, которого нужно удалить")
+    public void destroy(@Parameter(description = "Идентификатор поста, которого нужно удалить")
                  @PathVariable Long id) {
         postService.delete(id);
     }

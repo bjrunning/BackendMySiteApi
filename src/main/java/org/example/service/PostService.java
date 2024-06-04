@@ -16,7 +16,7 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    private PostRepository repository;
+    private PostRepository postRepository;
 
     @Autowired
     private PostMapper postMapper;
@@ -25,7 +25,7 @@ public class PostService {
     private UserUtils userUtils;
 
     public List<PostDTO> getAll() {
-        var posts = repository.findAll();
+        var posts = postRepository.findAll();
         var result = posts.stream()
                 .map(postMapper::map)
                 .toList();
@@ -35,28 +35,28 @@ public class PostService {
     public PostDTO create(PostCreateDTO postData) {
         var post = postMapper.map(postData);
         post.setAuthor(userUtils.getCurrentUser());
-        repository.save(post);
+        postRepository.save(post);
         var postDTO = postMapper.map(post);
         return postDTO;
     }
 
     public PostDTO findById(Long id) {
-        var post = repository.findById(id)
+        var post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Не найдено: " + id));
         var postDTO = postMapper.map(post);
         return postDTO;
     }
 
     public PostDTO update(PostUpdateDTO postData, Long id) {
-        var post = repository.findById(id)
+        var post = postRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Не найдено: " + id));
         postMapper.update(postData, post);
-        repository.save(post);
+        postRepository.save(post);
         var postDTO = postMapper.map(post);
         return postDTO;
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        postRepository.deleteById(id);
     }
 }

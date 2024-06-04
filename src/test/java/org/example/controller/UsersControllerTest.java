@@ -29,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.model.User;
 import org.example.repository.UserRepository;
 import org.example.util.ModelGenerator;
-import net.datafaker.Faker;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -42,9 +41,6 @@ public class UsersControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private Faker faker;
 
     @Autowired
     private UserRepository userRepository;
